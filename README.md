@@ -2,7 +2,7 @@
 
 A retro-styled terminal UI for controlling Elgato Key Light devices.
 
-![elgatui](https://raw.githubusercontent.com/BMayhew/elgatui/main/elgato-command-line.png)
+![elgatui](https://raw.githubusercontent.com/BMayhew/elgatui/main/elgatui-command-line.png)
 
 ## Setup
 
