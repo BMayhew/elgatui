@@ -4,6 +4,8 @@ A retro-styled terminal UI for controlling Elgato Key Light devices.
 
 ![elgatui](https://raw.githubusercontent.com/BMayhew/elgatui/main/elgatui-command-line.png)
 
+![Demo](https://raw.githubusercontent.com/BMayhew/elgatui/main/demo.gif)
+
 ## Setup
 
 ### 1. Find Your Key Light IP Address
