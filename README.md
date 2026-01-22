@@ -46,6 +46,10 @@ PRESET_NIGHT_TEMPERATURE=160
 # Meeting - balanced for video calls
 PRESET_MEETING_BRIGHTNESS=30
 PRESET_MEETING_TEMPERATURE=220
+
+# Interrogation - MAX brightness, coldest temp (WHERE WERE YOU LAST NIGHT?!)
+PRESET_INTERROGATION_BRIGHTNESS=100
+PRESET_INTERROGATION_TEMPERATURE=344
 ```
 
 ## Usage
@@ -58,7 +62,7 @@ Run without arguments to launch the interactive menu:
 ./elgatui
 ```
 
-Press keys 1-6, R, or Q to control the light - no Enter key required.
+Press keys 1-7, R, or Q to control the light - no Enter key required.
 
 ### Command Line
 
@@ -69,6 +73,7 @@ Press keys 1-6, R, or Q to control the light - no Enter key required.
 ./elgatui day       # Apply Day preset
 ./elgatui night     # Apply Night preset
 ./elgatui meeting   # Apply Meeting preset
+./elgatui interrogation  # Apply Interrogation preset (MAX!)
 ./elgatui status    # Show current status
 ./elgatui set 50 200  # Set brightness 50%, temperature 200
 ```

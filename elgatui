@@ -1,7 +1,7 @@
 #!/bin/bash
 # elgatui - Elgato Key Light Terminal UI
 # Usage: elgatui [command]
-# Commands: on, off, day, night, meeting, status, toggle, menu
+# Commands: on, off, day, night, meeting, interrogation, status, toggle, menu
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="$SCRIPT_DIR/config.sh"
@@ -176,7 +176,7 @@ draw_main_panel() {
     echo -e "  ${BCYAN}║${NC}  POWER   ${power_display}                      ${BCYAN}║${NC}   ${BGREEN}[1]${NC} Power ON                ${BCYAN}║${NC}   ${BYELLOW}[4]${NC} Day   ${DIM}(bright/cool)${NC}     ${BCYAN}║${NC}"
     echo -e "  ${BCYAN}║${NC}                                         ${BCYAN}║${NC}   ${BRED}[2]${NC} Power OFF               ${BCYAN}║${NC}   ${BYELLOW}[5]${NC} Night ${DIM}(dim/warm)${NC}        ${BCYAN}║${NC}"
     printf "  ${BCYAN}║${NC}  ${BYELLOW}BRIGHT${NC} [${bright_bar}] ${BWHITE}%s${NC}%*s${BCYAN}║${NC}   ${BCYAN}[3]${NC} Toggle                  ${BCYAN}║${NC}   ${BYELLOW}[6]${NC} Meeting ${DIM}(balanced)${NC}      ${BCYAN}║${NC}\n" "$bright_text" "$bright_pad" ""
-    echo -e "  ${BCYAN}║${NC}                                         ${BCYAN}║${NC}                               ${BCYAN}║${NC}                               ${BCYAN}║${NC}"
+    echo -e "  ${BCYAN}║${NC}                                         ${BCYAN}║${NC}                               ${BCYAN}║${NC}   ${BWHITE}[7]${NC} Interrogation ${DIM}(MAX!)${NC}   ${BCYAN}║${NC}"
     printf "  ${BCYAN}║${NC}  ${temp_color}TEMP${NC}   ["
     draw_bar "$temp_normalized" 100 15 "█" "░" "${temp_color}"
     printf "]               ${BCYAN}║${NC}   ${BWHITE}[R]${NC} Refresh                 ${BCYAN}║${NC}                               ${BCYAN}║${NC}\n"
@@ -255,6 +255,11 @@ cmd_meeting() {
     set_light 1 "$PRESET_MEETING_BRIGHTNESS" "$PRESET_MEETING_TEMPERATURE" > /dev/null
 }
 
+cmd_interrogation() {
+    echo -e "${BWHITE}>>> INTERROGATION MODE <<<${NC}"
+    set_light 1 "$PRESET_INTERROGATION_BRIGHTNESS" "$PRESET_INTERROGATION_TEMPERATURE" > /dev/null
+}
+
 cmd_set() {
     local brightness="$1"
     local temperature="$2"
@@ -298,6 +303,7 @@ show_menu() {
             4) show_action "DAY MODE ACTIVATED" "$BYELLOW"; set_light 1 "$PRESET_DAY_BRIGHTNESS" "$PRESET_DAY_TEMPERATURE" > /dev/null ;;
             5) show_action "NIGHT MODE ACTIVATED" "$BYELLOW"; set_light 1 "$PRESET_NIGHT_BRIGHTNESS" "$PRESET_NIGHT_TEMPERATURE" > /dev/null ;;
             6) show_action "MEETING MODE ACTIVATED" "$BYELLOW"; set_light 1 "$PRESET_MEETING_BRIGHTNESS" "$PRESET_MEETING_TEMPERATURE" > /dev/null ;;
+            7) show_action "WHERE WERE YOU LAST NIGHT?!" "$BWHITE"; set_light 1 "$PRESET_INTERROGATION_BRIGHTNESS" "$PRESET_INTERROGATION_TEMPERATURE" > /dev/null ;;
             r|R) ;;
             q|Q) clear; echo -e "${BCYAN}GAME OVER - Thanks for playing!${NC}"; exit 0 ;;
             *) show_action "INVALID COMMAND" "$BRED" ;;
@@ -317,6 +323,7 @@ show_help() {
     echo "  day      Day preset (bright, cool light)"
     echo "  night    Night preset (dim, warm light)"
     echo "  meeting  Meeting preset (balanced for video calls)"
+    echo "  interrogation  Interrogation preset (MAX brightness, coldest temp)"
     echo "  status   Show current light status"
     echo "  set <brightness> [temp]  Set custom values"
     echo "  menu     Interactive menu mode"
@@ -333,6 +340,7 @@ case "${1:-menu}" in
     day)     cmd_day ;;
     night)   cmd_night ;;
     meeting) cmd_meeting ;;
+    interrogation) cmd_interrogation ;;
     status)  cmd_status ;;
     set)     cmd_set "$2" "$3" ;;
     menu)    show_menu ;;
